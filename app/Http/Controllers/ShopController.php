@@ -13,7 +13,7 @@ class ShopController extends Controller
     public function index(){
 
         // Grab all the products from model
-        $AllProducts = Products::all();
+        $AllProducts = Products::paginate(6);
 
         // Show all the products through the view
         return view('shop.index', compact('AllProducts'));
@@ -55,6 +55,15 @@ class ShopController extends Controller
     }
 
     public function show($id){
-        
+        $product = Products::findOrFail($id);
+        return view('shop.show', compact('product'));
     }
+
+    public function delete($id){
+         $product = Products::findOrFail($id);
+         $productImage = $product['image'];
+         unlink("./images/Products/$productImage");
+         $product->delete();
+         return redirect('/Shop');
+     }
 }
