@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Products;
+use Session;
 use Intervention\Image\ImageManager;
 
 class ShopController extends Controller
@@ -66,4 +67,40 @@ class ShopController extends Controller
          $product->delete();
          return redirect('/Shop');
      }
+
+      public function edit($id){
+        $product = Products::findOrFail($id);
+        return view('shop.edit', compact('product'));
+    }
+    
+    public function update(Request $request, $id){
+        $this->validate($request,[
+            'title'=>'required|min:1|max:255',
+            'description'=>'required|min:10',
+            'image'=>'image',
+            'price'=>'required|numeric',
+            'quantity'=>'required|numeric'
+        ]);
+        $product = Products::findOrFail($id);
+        $productImage = $product['image'];
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        if($request->image){
+            unlink("./images/Products/$productImage");
+            $manager = new ImageManager();
+            $folder="./images/Products";
+            $imagename = preg_replace("/[^0-9a-zA-Z]/", "", $request->title);
+            $productImage = $manager->make($request->image);
+            $productImage->fit(500, null, function ($constraint) {
+                $constraint->upsize();
+            });
+            $productImage->save($folder.'/'.$imagename.'.jpg', 100);
+            $product->image = $imagename.'.jpg';
+        }
+        $product->save();
+        Session::flash('success', 'This product was successfully updated.');
+        return redirect("/Shop/$product->id");
+    }
 }
