@@ -4,9 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bcb1a2e83e743613e16ceededd86a529",
-    "content-hash": "7a541c7afd86e4f9f1797776db54162f",
+    "hash": "bc0c17d88d098fb0efd3f149b10f53db",
+    "content-hash": "88b942509d769655a70d6c5f74e41246",
     "packages": [
+        {
+            "name": "braintree/braintree_php",
+            "version": "3.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/braintree/braintree_php.git",
+                "reference": "2ab7e41d8d31286fa64bae7279a8e785a40b1be4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/2ab7e41d8d31286fa64bae7279a8e785a40b1be4",
+                "reference": "2ab7e41d8d31286fa64bae7279a8e785a40b1be4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Braintree": "lib/"
+                },
+                "psr-4": {
+                    "Braintree\\": "lib/Braintree"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Braintree",
+                    "homepage": "http://www.braintreepayments.com"
+                }
+            ],
+            "description": "Braintree PHP Client Library",
+            "time": "2016-04-12 20:39:36"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",

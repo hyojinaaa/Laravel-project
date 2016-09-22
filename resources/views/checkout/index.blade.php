@@ -1,24 +1,25 @@
 @extends('master')
 
-@section('title', 'Cart')
-@section('description', 'This is cart page')
+@section('title', 'Checkout')
+@section('description', 'Checkout Page')
 
 @section('styles')
 
 @endsection
 
 @section('content')
-	<h1>This is our Shopping Cart for {{ \Auth::user()->name }}</h1>
+<div class="col-xs-12">
+	<h1>Checkout For {{ \Auth::user()->name }}</h1>
+
 	 {{-- Row of the Cart --}}
 	@if(count($Cart) > 0)
 		<table class="table table-hover table-condensed">
 			<thead>
 				<tr>
 					<th style="width:50%">Product</th>
-					<th style="width:10%">Price</th>
-					<th style="width:10%">Quantity</th>
+					<th style="width:20%">Price</th>
+					<th style="width:20%">Quantity</th>
 					<th style="width:20%">Subtotal</th>
-					<th style="width:10%"></th>
 				</tr>
 			</thead>
 			<body>
@@ -29,32 +30,41 @@
 						<td>{{ $CartRow->product->price }}</td>
 						<td>{{ $CartRow->quantity }}</td>
 						<td>{{ $CartRow->subtotal }}</td>
-						<td><a href="/Cart/Remove/{{ $CartRow->id }}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
 					</tr>
 				@endforeach
 				<tr>
-					<td></td>
 					<td></td>
 					<td></td>
 					<td><strong>Grandtotal</strong></td>
 					<td><strong>${{ $Grandtotal }}</strong></td>
 				</tr>
 			</body>
-			<tfoot>
-				<tr>
-					<td><a href="/Shop" class="btn btn-warning">Continue Shopping</a></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td><a href="/Checkout/{{ \Auth::user()->id }}" class="btn btn-success">Checkout</a></td>
-				</tr>
-			</tfoot>
+			
 		</table>
-	@else
-		<p>Your Shopping Cart is Empty!</p>
 	@endif
+	<form id="checkout" method="post" action="/checkout">
+ 		<div id="payment-form"></div>
+ 		<input type="submit" value="Pay $10">
+	</form>
+</div>
 @endsection
 
 @section('scripts')
+	<script src="https://js.braintreegateway.com/js/braintree-2.29.0.min.js"></script>
+	<script>
+	// We generated a client token for you so you can test out this code
+	// immediately. In a production-ready integration, you will need to
+	// generate a client token on your server (see section below).
+	var clientToken = "<?php echo($clientToken = Braintree_ClientToken::generate()); ?>"
 
+	braintree.setup(clientToken, "dropin", {
+  	container: "payment-form"
+	});
+	</script>
 @endsection
+
+
+
+
+
+
