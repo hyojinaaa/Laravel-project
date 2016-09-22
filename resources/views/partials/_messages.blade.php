@@ -20,3 +20,11 @@
 	</div>
 
 @endif
+
+@if(Session::has('PaymentSuccess'))
+
+	<div class="alert alert-success" role="alert">
+		<strong>Success:</strong> {{ Session::get('PaymentSuccess')}}
+	</div>
+
+@endif

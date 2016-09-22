@@ -42,9 +42,11 @@
 			
 		</table>
 	@endif
-	<form id="checkout" method="post" action="/checkout">
+	{!! csrf_field() !!}
+	<form id="checkout" method="post" action="/Checkout/{{ \Auth::user()->id }}/Transaction">
+		
  		<div id="payment-form"></div>
- 		<input type="submit" value="Pay $10">
+ 		<button type="submit" class="btn btn-success">Pay Now</button>
 	</form>
 </div>
 @endsection
